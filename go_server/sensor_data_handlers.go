@@ -8,15 +8,18 @@ import (
 )
 
 type Sensor struct {
-	Time       string `json:"Time"`
-	Tempreture string `json:"Tempreture"`
-	Pressure   string `json:"Pressure"`
-	Humidity   string `json:"Humidity"`
+	Time        string `json:"Time"`
+	Temperature string `json:"Temperature"`
+	Pressure    string `json:"Pressure"`
+	Humidity    string `json:"Humidity"`
 }
 
 var sensor_data = []Sensor{}
 
 func getSensorDataHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
 	//Convert the "birds" variable to json
 	sensorListBytes, err := json.Marshal(sensor_data)
 
@@ -76,7 +79,7 @@ func putSensorDataHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Get the information about the bird from the form info
 	sensor.Time = r.Form.Get("Time")
-	sensor.Tempreture = r.Form.Get("Tempreture")
+	sensor.Temperature = r.Form.Get("Temperature")
 	sensor.Pressure = r.Form.Get("Pressure")
 	sensor.Humidity = r.Form.Get("Humidity")
 
