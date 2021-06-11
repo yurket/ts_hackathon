@@ -1,18 +1,20 @@
 package main
 
 import (
-	"net/http"
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"strings"
 )
 
 type Sensor struct {
-	Time     string `json:"time"`
-	Value string `json:"value"`
+	Time       string `json:"Time"`
+	Tempreture string `json:"Tempreture"`
+	Pressure   string `json:"Pressure"`
+	Humidity   string `json:"Humidity"`
 }
 
-var sensor_data  = []Sensor{Sensor{Time : "time", Value : "bestval"}}
-
+var sensor_data = []Sensor{}
 
 func getSensorDataHandler(w http.ResponseWriter, r *http.Request) {
 	//Convert the "birds" variable to json
@@ -29,8 +31,35 @@ func getSensorDataHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(sensorListBytes)
 }
 
+func formatRequest(r *http.Request) string {
+	// Create return string
+	var request []string
+	// Add the request string
+	url := fmt.Sprintf("%v %v %v", r.Method, r.URL, r.Proto)
+	request = append(request, url)
+	// Add the host
+	request = append(request, fmt.Sprintf("Host: %v", r.Host))
+	// Loop through headers
+	for name, headers := range r.Header {
+		name = strings.ToLower(name)
+		for _, h := range headers {
+			request = append(request, fmt.Sprintf("%v: %v", name, h))
+		}
+	}
+
+	// If this is a POST, add post data
+	if r.Method == "POST" {
+		r.ParseForm()
+		request = append(request, "\n")
+		request = append(request, r.Form.Encode())
+	}
+	// Return the request as a string
+	return strings.Join(request, "\n")
+}
+
 func putSensorDataHandler(w http.ResponseWriter, r *http.Request) {
-	// Create a new instance of Bird
+	fmt.Println(formatRequest(r))
+
 	sensor := Sensor{}
 
 	// We send all our data as HTML form data
@@ -46,13 +75,12 @@ func putSensorDataHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get the information about the bird from the form info
-	sensor.Time = r.Form.Get("time")
-	sensor.Value = r.Form.Get("value")
+	sensor.Time = r.Form.Get("Time")
+	sensor.Tempreture = r.Form.Get("Tempreture")
+	sensor.Pressure = r.Form.Get("Pressure")
+	sensor.Humidity = r.Form.Get("Humidity")
 
 	// Append our existing list of birds with a new entry
 	sensor_data = append(sensor_data, sensor)
-
-	//Finally, we redirect the user to the original HTMl page
-	// (located at `/assets/`), using the http libraries `Redirect` method
-	http.Redirect(w, r, "/assets/", http.StatusFound)
+	fmt.Println(sensor_data)
 }

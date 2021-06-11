@@ -10,19 +10,19 @@ import (
 	"fmt"
 	// The "net/http" library has methods to implement HTTP clients and servers
 	"net/http"
+
 	"github.com/gorilla/mux"
 )
 
 func newRouter() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/hello", handler).Methods("GET")
-	
-		// These lines are added inside the newRouter() function before returning r
+
+	// These lines are added inside the newRouter() function before returning r
 	r.HandleFunc("/sensor", getSensorDataHandler).Methods("GET")
-	r.HandleFunc("/sensor", putSensorDataHandler).Methods("POST")
+	r.HandleFunc("/sensor_post", putSensorDataHandler).Methods("POST")
 	return r
 }
-
 
 func main() {
 	// The router is now formed by calling the `newRouter` constructor function
