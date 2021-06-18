@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-
 	"iot/controllers"
 	"iot/models"
 )
@@ -15,9 +14,11 @@ func main() {
 		c.Set("db", db)
 		c.Next()
 	})
-	r.GET("/", controllers.GetDevices)
-	r.POST("/", controllers.MakeDevice)
-	r.DELETE("/:id", controllers.DeleteDevice)
+	r.GET("/", controllers.GetData)
+	r.POST("/", controllers.PostData)
+	r.GET("/devices", controllers.GetDevices)
+	r.POST("/devices", controllers.MakeDevice)
+	r.DELETE("/devices/:id", controllers.DeleteDevice)
 	r.Run()
 }
 

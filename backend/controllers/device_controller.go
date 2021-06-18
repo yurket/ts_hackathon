@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"iot/models"
 	"net/http"
 
@@ -37,8 +36,6 @@ func DeleteDevice(c *gin.Context) {
 
 	var device models.Device
 	db.First(&device, id)
-
-	fmt.Println(device)
 
 	if device.ID != 0 {
 		db.Delete(&device)
