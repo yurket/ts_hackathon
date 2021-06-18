@@ -1,0 +1,16 @@
+  version: '3.8'
+    
+  services:
+    backend:
+      build:
+        context: ./backend/
+      ports:
+        - "8080:8080"
+      restart: unless-stopped
+    frontend:
+        build:
+          context: ./frontend/
+        volumes:
+          - .:/fontend
+        ports:
+          - "3000:3000"
