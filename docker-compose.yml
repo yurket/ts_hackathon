@@ -14,3 +14,18 @@
           - .:/fontend
         ports:
           - "3000:3000"
+    mongo:
+        image: 'mongo:latest'
+        container_name: mongo
+        ports:
+            - '27017:27017'
+        restart: always
+    #Web-based MongoDB admin interface localhost:8081
+    mongo_express:
+        image: mongo-express
+        container_name: mongo_express
+        depends_on:
+            - 'mongo'
+        ports:
+            - '8081:8081'
+        restart: always
