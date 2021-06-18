@@ -2,8 +2,9 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type Sensor struct {
@@ -29,4 +30,5 @@ func PostData(c *gin.Context) {
 		return
 	}
 	sensor_data = append(sensor_data, data)
+	c.JSON(http.StatusOK, gin.H{})
 }
