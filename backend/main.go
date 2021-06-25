@@ -22,6 +22,6 @@ func main() {
 	r.Run()
 }
 
-// curl -i -X GET -H "Content-Type: application/json" http://localhost:8080/
-// curl -i -X POST -H "Content-Type: application/json" -d "{\"name\":\"RPi\"}" http://localhost:8080/
-// curl -i -X DELETE http://localhost:8080/52
+// curl -i -X GET -H "Content-Type: application/json" http://localhost:8080/devices
+// curl -i -X POST -H "Content-Type: application/json" -d "{\"name\":\"RPi\"}" http://localhost:8080/devices
+// curl -i -X DELETE http://localhost:8080/devices/60ce0bec8bd713427940abf7
