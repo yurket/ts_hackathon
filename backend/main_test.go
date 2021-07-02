@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"testing"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -12,7 +13,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-func main() {
+func TestMongoInteraction(t *testing.T) {
 	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017"))
 	if err != nil {
 		log.Fatal(err)
@@ -30,7 +31,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(databases)
+	fmt.Println("Mongo databases: ", databases)
 
 	db := client.Database("my_db")
 	collection1 := db.Collection("collection1")
